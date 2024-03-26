@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "Physics.h"
 #include "GuiManager.h"
+#include "InventoryManager.h"
 #include "inventario.h"
 #include "espada.h"
 
@@ -40,6 +41,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new Scene();
 	map = new Map();
 	entityManager = new EntityManager();
+	inventoryManager = new InventoryManager();
 	guiManager = new GuiManager();
 	/*espada = new Espada();*/
 	inventario = new Inventario();
@@ -56,6 +58,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene);
 	AddModule(map);
 	AddModule(entityManager);
+	AddModule(inventoryManager);
 	AddModule(guiManager);
 	AddModule(inventario);
 

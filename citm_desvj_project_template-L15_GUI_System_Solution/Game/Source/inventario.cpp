@@ -81,22 +81,22 @@ bool Inventario::CleanUp()
 	return true;
 }
 
-void datos::agregarEspada(int ataque, int durabilidad, int magia, float peso)
-{
-	if (datosCreados.size() <= 10)
-	{
-		datos* dato;
-		int ide;
-		for (int i = 0; i <= datosCreados.size(); i++)
-		{
-			if (datosCreados.at(i)->id == 0)
-			{
-				ide = datosCreados.at(i - 1)->id;
-			}
-		}
-		dato = new datos(ide, ataque, durabilidad, magia, peso);
-
-		datosCreados.push_back(dato);
-	}
-	
-}
+//void datos::agregarEspada(int ataque, int durabilidad, int magia, float peso)
+//{
+//	if (datosCreados.size() <= 10)
+//	{
+//		datos* dato;
+//		int ide;
+//		for (int i = 0; i <= datosCreados.size(); i++)
+//		{
+//			if (datosCreados.at(i)->id == 0)
+//			{
+//				ide = datosCreados.at(i - 1)->id;
+//			}
+//		}
+//		dato = new datos(ide, ataque, durabilidad, magia, peso);
+//
+//		datosCreados.push_back(dato);
+//	}
+//	
+//}

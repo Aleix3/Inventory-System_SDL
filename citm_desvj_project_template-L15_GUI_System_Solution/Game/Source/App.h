@@ -19,6 +19,7 @@ class Textures;
 class Audio;
 class Scene;
 class EntityManager;
+class InventoryManager;
 class Map;
 //L07 DONE 2: Add Physics module
 class Physics;
@@ -106,6 +107,7 @@ public:
 	Audio* audio;
 	Scene* scene;
 	EntityManager* entityManager;
+	InventoryManager* inventoryManager;
 	Map* map;
 	//L07 DONE 2: Add Physics module
 	Physics* physics;
