@@ -133,6 +133,24 @@ void EntityManager::DestroyEntity2(int entityId)
 	}
 }
 
+ListItem<Entity*>* EntityManager::FindEntityById(int entityId)
+{
+	ListItem<Entity*>* item;
+	
+	for (item = entities.start; item != NULL; item = item->next)
+	{
+		if (item->data->id != 0)
+		{
+			if (item->data->id == entityId && entityId > 0) // Comprueba si el ID coincide
+			{
+				return item; // Devuelve el elemento si encuentra el ID
+			}
+		}
+	}
+
+	return NULL; // Devuelve NULL si no se encuentra el ID
+}
+
 void EntityManager::AddEntity(Entity* entity)
 {
 	if ( entity != nullptr) entities.Add(entity);

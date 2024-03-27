@@ -28,6 +28,8 @@
     <item x="500" y="672" texturepath="Assets/Textures/goldCoin.png"/>
 	<espada x="200" y="672"/>
 	<espada x="400" y="672"/>
+	<espada x="250" y="372"/>
+	<espada x="400" y="272"/>
   </scene>
   
 </config>

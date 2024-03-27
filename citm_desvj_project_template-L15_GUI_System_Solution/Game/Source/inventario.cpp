@@ -43,34 +43,7 @@ bool Inventario::Update(float dt)
 {
 	// L07 DONE 4: Add a physics to an item - update the position of the object from the physics.  
 
-	app->tex->GetSize(texture, texW, texH);
-
-	if (app->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN) {	
-		mostrar = !mostrar;
-	}
-
-	//if (isPicked) // Si se ha recogido una espada
-	//{
-	//	// Añade la espada al inventario
-	//	espadas.push_back(Espada(/*datos de la espada*/));
-
-	//	// Desactiva la espada en el mundo del juego
-	//	// Supongamos que tienes un método para desactivar una espada en el mundo del juego
-	//	// que se llama DesactivarEspada() en la clase Scene
-	//	app->scene->DesactivarEspada(/*datos de la espada*/);
-
-	//	// Vuelve a poner isPicked a false para esperar a que se recoja otra espada
-	//	isPicked = false;
-	//}
 	
-	
-
-	if (mostrar == true)
-	{
-
-		app->render->DrawTexture(texture, texW / 8, texH / 8 - 200);
-	}
-
 
 	
 	return true;

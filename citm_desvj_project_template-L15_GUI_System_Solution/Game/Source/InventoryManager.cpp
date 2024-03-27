@@ -6,6 +6,8 @@
 #include "Textures.h"
 #include "Scene.h"
 #include "espada.h"
+#include "inventity.h"
+#include "SwordInv.h"
 #include "Defs.h"
 #include "Log.h"
 
@@ -42,6 +44,8 @@ bool InventoryManager::Awake(pugi::xml_node config)
 
 bool InventoryManager::Start() {
 
+	Backtexture = app->tex->Load("Assets/Textures/inventario.png");
+
 	bool ret = true; 
 
 	//Iterates over the entities and calls Start
@@ -76,8 +80,8 @@ bool InventoryManager::CleanUp()
 
 	return ret;
 }
-
-Inventity* InventoryManager::CreateEntity(InventityType type, int id, int ataque, int durabilidad, int magia, float peso)
+int highestId = -1;
+Inventity* InventoryManager::CreateItem(EntityType type, int id, int ataque, int durabilidad, int magia, float peso)
 {
 	Inventity* entity = nullptr;
 
@@ -86,10 +90,28 @@ Inventity* InventoryManager::CreateEntity(InventityType type, int id, int ataque
 	{
 	
 
-	case InventityType::ESPADA:
+	case EntityType::ESPADA:
+	{
 		
+		for (ListItem<Inventity*>* item = inventities.start; item != NULL; item = item->next)
+		{
+			if (item->data->id > highestId)
+			{
+				highestId = item->data->id;
+			}
+		}
+		Swordinv* sword = new Swordinv();
+		sword->id = highestId+1;
+		sword->type = InventityType::ESPADA;
+		sword->damage = ataque;
+		sword->durability = durabilidad;
+		sword->weight = peso;
+		sword->icon = app->tex->Load("Assets/Textures/espmadIcon.png");
+		entity = sword;
 		break;
-	case InventityType::ESPADA2:
+	}
+	case EntityType::ESPADA2:
+
 		
 		break;
 	default:
@@ -101,7 +123,7 @@ Inventity* InventoryManager::CreateEntity(InventityType type, int id, int ataque
 	return entity;
 }
 
-void InventoryManager::DestroyEntity(Inventity* entity)
+void InventoryManager::DestroyItem(Inventity* entity)
 {
 	ListItem<Inventity*>* item;
 
@@ -111,7 +133,7 @@ void InventoryManager::DestroyEntity(Inventity* entity)
 	}
 }
 
-void InventoryManager::DestroyEntity2(int entityId)
+void InventoryManager::DestroyItem2(int entityId)
 {
 	ListItem<Inventity*>* item;
 
@@ -130,7 +152,19 @@ void InventoryManager::DestroyEntity2(int entityId)
 	}
 }
 
-void InventoryManager::AddEntity(Inventity* entity)
+void InventoryManager::UseItemSelected()
+{
+}
+
+void InventoryManager::RemoveItemSelected()
+{
+}
+
+void InventoryManager::OnMovePointer()
+{
+}
+
+void InventoryManager::AddItem(Inventity* entity)
 {
 	if ( entity != nullptr) inventities.Add(entity);
 }
@@ -148,6 +182,40 @@ bool InventoryManager::Update(float dt)
 		if (pEntity->active == false) continue;
 		ret = item->data->Update(dt);
 	}
+
+	return ret;
+}
+
+bool InventoryManager::PostUpdate()
+{
+	bool ret = true;
+	app->tex->GetSize(Backtexture, texW, texH);
+
+	if (app->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN) {
+		mostrar = !mostrar;
+	}
+
+
+
+
+	if (mostrar == true)
+	{
+		ListItem<Inventity*>* item;
+		Inventity* pEntity = NULL;
+		app->render->DrawTexture(Backtexture, texW / 8, texH / 8 - 200);
+		for (item = inventities.start; item != NULL && ret == true; item = item->next)
+		{
+			pEntity = item->data;
+			app->render->DrawTexture(pEntity->icon, 445 + pEntity->id*75, 300);
+			
+			
+
+		}
+
+		
+	}
+
+
 
 	return ret;
 }

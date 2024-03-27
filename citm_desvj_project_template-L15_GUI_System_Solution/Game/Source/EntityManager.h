@@ -33,6 +33,8 @@ public:
 
 	void EntityManager::DestroyEntity2(int entityId);
 
+	ListItem<Entity*>* EntityManager::FindEntityById(int entityId);
+
 	void AddEntity(Entity* entity);
 
 public:

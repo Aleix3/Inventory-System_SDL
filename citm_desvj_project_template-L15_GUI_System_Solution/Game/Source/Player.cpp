@@ -9,6 +9,7 @@
 #include "Point.h"
 #include "Physics.h"
 #include"inventario.h"
+#include "InventoryManager.h"
 
 Player::Player() : Entity(EntityType::PLAYER)
 {
@@ -110,7 +111,13 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 	case ColliderType::ESPADA:
 		espadaid = (app->scene->GetEspadaId(physB));
+		if (app->entityManager->FindEntityById(espadaid) != nullptr)
+		{
+			app->inventoryManager->CreateItem(app->entityManager->FindEntityById(espadaid)->data->type, app->entityManager->FindEntityById(espadaid)->data->id, app->entityManager->FindEntityById(espadaid)->data->ataque, app->entityManager->FindEntityById(espadaid)->data->durabilidad, app->entityManager->FindEntityById(espadaid)->data->magia, app->entityManager->FindEntityById(espadaid)->data->peso);
+
+		}
 		app->entityManager->DestroyEntity2(espadaid);
+		/*app->inventoryManager->CreateItem()*/
 		espadas = 1;
 		LOG("Collision PLATFORM");
 		break;

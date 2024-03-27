@@ -5,6 +5,7 @@
 #include "Entity.h"
 #include "inventity.h"
 #include "List.h"
+#include "Textures.h"
 
 class InventoryManager : public Module
 {
@@ -24,26 +25,42 @@ public:
 	// Called every frame
 	bool Update(float dt);
 
+	bool PostUpdate();
+
 	// Called before quitting
 	bool CleanUp();
 
 	// Additional methods
-	Inventity* CreateEntity(InventityType type, int id, int ataque, int durabilidad, int magia, float peso);
+	Inventity* InventoryManager::CreateItem(EntityType type, int id, int ataque, int durabilidad, int magia, float peso);
 
-	void DestroyEntity(Inventity* Inventity);
+	void AddItem(Inventity* Inventity);
 
-	void InventoryManager::DestroyEntity2(int entityId);
+	void DestroyItem(Inventity* Inventity);
 
-	void AddEntity(Inventity* Inventity);
+	void InventoryManager::DestroyItem2(int entityId);
+
+	void UseItemSelected();
+
+	void RemoveItemSelected();
+
+	void OnMovePointer();
+
+	
 
 public:
 
-	int ataque = 100;
-	int durabilidad; // Durabilidad de la espada
-	int magia;
-	float peso; // Peso de la espada
+
 
 	List<Inventity*> inventities;
+	iPoint PointerPosition;
+	iPoint InventorySize;
+	SDL_Texture* InventoryBackground;
+	SDL_Texture* SelectedItemText;
+	SDL_Texture* EquipedItemText;
+
+	SDL_Texture* Backtexture;
+	uint texW, texH;
+	bool mostrar = false;
 
 };
 
