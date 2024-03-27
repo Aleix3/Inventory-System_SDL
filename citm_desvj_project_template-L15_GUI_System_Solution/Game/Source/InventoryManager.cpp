@@ -45,6 +45,8 @@ bool InventoryManager::Awake(pugi::xml_node config)
 bool InventoryManager::Start() {
 
 	Backtexture = app->tex->Load("Assets/Textures/inventario.png");
+	SelectItemText = app->tex->Load("Assets/Textures/select.png");
+	SelectedItemText = app->tex->Load("Assets/Textures/selected.png");
 
 	bool ret = true; 
 
@@ -85,6 +87,7 @@ Inventity* InventoryManager::CreateItem(EntityType type, int id, int ataque, int
 {
 	Inventity* entity = nullptr;
 
+
 	//L03: DONE 3a: Instantiate entity according to the type and add the new entity to the list of Entities
 	switch (type)
 	{
@@ -92,7 +95,13 @@ Inventity* InventoryManager::CreateItem(EntityType type, int id, int ataque, int
 
 	case EntityType::ESPADA:
 	{
-		
+		int newId = 0;
+		for (ListItem<Inventity*>* item = inventities.start; item != nullptr; item = item->next)
+		{
+
+			item->data->id = newId;
+			newId++;
+		}
 		for (ListItem<Inventity*>* item = inventities.start; item != NULL; item = item->next)
 		{
 			if (item->data->id > highestId)
@@ -100,6 +109,7 @@ Inventity* InventoryManager::CreateItem(EntityType type, int id, int ataque, int
 				highestId = item->data->id;
 			}
 		}
+
 		Swordinv* sword = new Swordinv();
 		sword->id = highestId+1;
 		sword->type = InventityType::ESPADA;
@@ -111,16 +121,51 @@ Inventity* InventoryManager::CreateItem(EntityType type, int id, int ataque, int
 		break;
 	}
 	case EntityType::ESPADA2:
+	{
+		for (ListItem<Inventity*>* item = inventities.start; item != NULL; item = item->next)
+		{
+			if (item->data->id > highestId)
+			{
+				highestId = item->data->id;
+			}
+		}
 
-		
+		Swordinv* sword = new Swordinv();
+		sword->id = highestId + 1;
+		sword->type = InventityType::ESPADA;
+		sword->damage = ataque;
+		sword->durability = durabilidad;
+		sword->weight = peso;
+		sword->icon = app->tex->Load("Assets/Textures/esphier.png");
+		entity = sword;
+
 		break;
+	}
+		
 	default:
 		break;
 	}
 
+
 	inventities.Add(entity);
 
 	return entity;
+}
+
+bool InventoryManager::IsFull()
+{
+	
+	// Encontrar el ID más alto actualmente asignado
+
+	
+	// Verificar si el siguiente ID disponible es 9
+	if (inventities.Count() == 10) {
+		return true;
+	}
+	else {
+		return false;
+	}
+		
 }
 
 void InventoryManager::DestroyItem(Inventity* entity)
@@ -139,16 +184,24 @@ void InventoryManager::DestroyItem2(int entityId)
 
 	for (item = inventities.start; item != NULL; item = item->next)
 	{
-		if (item->data->id != 0)
-		{
-			if (item->data->id == entityId && entityId > 0) // Comprueba si el ID coincide
+
+			if (item->data->id == entityId) // Comprueba si el ID coincide
 			{
 				inventities.Del(item);
 				delete item->data; // Libera la memoria de la espada eliminada
+
 				break; // Termina el bucle después de eliminar la espada
 			}
-		}
 		
+		
+	}
+	// Reasignar los IDs después de la eliminación
+	int newId = 0;
+	for (item = inventities.start; item != nullptr; item = item->next)
+	{
+
+		item->data->id = newId;
+		newId++;
 	}
 }
 
@@ -162,6 +215,24 @@ void InventoryManager::RemoveItemSelected()
 
 void InventoryManager::OnMovePointer()
 {
+
+	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN && PointerPosition.x < 420) {
+		PointerPosition.x += 75;
+		PointerId += 1;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN && PointerPosition.x > 125) {
+		PointerPosition.x -= 75;
+		PointerId -= 1;
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN && PointerPosition.y < 1) {
+		PointerPosition.y += 76;
+		PointerId += 5;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN && PointerPosition.y > -75) {
+		PointerPosition.y -= 76;
+		PointerId -= 5;
+	}
 }
 
 void InventoryManager::AddItem(Inventity* entity)
@@ -171,17 +242,34 @@ void InventoryManager::AddItem(Inventity* entity)
 
 bool InventoryManager::Update(float dt)
 {
-	bool ret = true;
-	ListItem<Inventity*>* item;
-	Inventity* pEntity = NULL;
-
-	for (item = inventities.start; item != NULL && ret == true; item = item->next)
-	{
-		pEntity = item->data;
-
-		if (pEntity->active == false) continue;
-		ret = item->data->Update(dt);
+	if (app->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN) {
+		mostrar = !mostrar;
 	}
+	bool ret = true;
+
+
+
+	if (mostrar == true)
+	{
+		OnMovePointer();
+
+		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
+			selected = { PointerPosition.x, PointerPosition.y };
+			selectedId = PointerId;
+			
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_BACKSPACE) == KEY_DOWN)
+		{
+			DestroyItem2(selectedId);
+
+		}
+	}
+
+	
+
+
+
 
 	return ret;
 }
@@ -191,9 +279,7 @@ bool InventoryManager::PostUpdate()
 	bool ret = true;
 	app->tex->GetSize(Backtexture, texW, texH);
 
-	if (app->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN) {
-		mostrar = !mostrar;
-	}
+	
 
 
 
@@ -203,10 +289,23 @@ bool InventoryManager::PostUpdate()
 		ListItem<Inventity*>* item;
 		Inventity* pEntity = NULL;
 		app->render->DrawTexture(Backtexture, texW / 8, texH / 8 - 200);
+		app->render->DrawTexture(SelectItemText, PointerPosition.x, PointerPosition.y);//75//76
+		
+		app->render->DrawTexture(SelectedItemText, selected.x, selected.y);
 		for (item = inventities.start; item != NULL && ret == true; item = item->next)
 		{
 			pEntity = item->data;
-			app->render->DrawTexture(pEntity->icon, 445 + pEntity->id*75, 300);
+			if (pEntity->id < 5)
+			{
+				app->render->DrawTexture(pEntity->icon, 445 + pEntity->id * 75, 300);
+			}
+			if (pEntity->id >= 5)
+			{
+				
+				app->render->DrawTexture(pEntity->icon, 445 + ((pEntity->id-5) * 75), 380);
+			}
+			
+			
 			
 			
 

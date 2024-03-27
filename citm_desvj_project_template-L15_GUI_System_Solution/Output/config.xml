@@ -30,6 +30,14 @@
 	<espada x="400" y="672"/>
 	<espada x="250" y="372"/>
 	<espada x="400" y="272"/>
+	  <espada x="250" y="172"/>
+	  <espada x="400" y="472"/>
+	  <espada x="400" y="492"/>
+	  <espada x="150" y="172"/>
+	  <espada x="420" y="472"/>
+	  <espada x="470" y="492"/>
+	  <espada x="120" y="472"/>
+	  <espada x="170" y="492"/>
   </scene>
   
 </config>

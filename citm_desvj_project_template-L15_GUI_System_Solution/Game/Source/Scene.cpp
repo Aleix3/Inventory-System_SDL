@@ -64,7 +64,10 @@ bool Scene::Awake(pugi::xml_node config)
 	
 	
 	espada2 = (Espada2*)app->entityManager->CreateEntity(EntityType::ESPADA2,100, 0, 0, 0, 0);
-	GetEspada2()->id = 100;
+	espada2->id = 100;
+	espadas2.push_back(espada2);
+
+	
 	
 	return ret;
 }
@@ -110,17 +113,17 @@ bool Scene::Update(float dt)
 	//L02 DONE 3: Make the camera movement independent of framerate
 	float camSpeed = 1; 
 
-	if(app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		app->render->camera.y -= (int)ceil(camSpeed * dt);
+	//if(app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	//	app->render->camera.y -= (int)ceil(camSpeed * dt);
 
-	if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		app->render->camera.y += (int)ceil(camSpeed * dt);
+	//if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	//	app->render->camera.y += (int)ceil(camSpeed * dt);
 
-	if(app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		app->render->camera.x -= (int)ceil(camSpeed * dt);
+	//if(app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	//	app->render->camera.x -= (int)ceil(camSpeed * dt);
 
-	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		app->render->camera.x += (int)ceil(camSpeed * dt);
+	//if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	//	app->render->camera.x += (int)ceil(camSpeed * dt);
 
 	// L09 DONE 6: Implement a method that repositions the player in the map with a mouse click
 
@@ -203,6 +206,20 @@ int Scene::GetEspadaId(PhysBody* physBody) const {
 		if (espadas->pbody == physBody) {
 			// Si coincide, devuelve el identificador único de la espada 2
 			return espadas->id;
+		}
+	}
+
+	// Si no se encuentra el cuerpo físico, devuelve un valor que indique que no se encontró la espada
+	return -1;
+}
+
+int Scene::GetEspada2Id(PhysBody* physBody) const {
+	// Itera sobre todas las espadas 2 en la escena
+	for (const auto& espadas2 : espadas2) {
+		// Comprueba si el cuerpo físico de la espada 2 coincide con el pasado como argumento
+		if (espadas2->pbody == physBody) {
+			// Si coincide, devuelve el identificador único de la espada 2
+			return espadas2->id;
 		}
 	}
 

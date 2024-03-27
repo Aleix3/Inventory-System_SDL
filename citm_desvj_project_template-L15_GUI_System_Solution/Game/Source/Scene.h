@@ -49,6 +49,8 @@ public:
 
 	int Scene::GetEspadaId(PhysBody* physBody) const;
 
+	int Scene::GetEspada2Id(PhysBody* physBody) const;
+
 private:
 	SDL_Texture* img;
 	float textPosX, textPosY = 0;
@@ -64,6 +66,7 @@ private:
 	Espada* espada;
 	Espada2* espada2;
 	std::vector<Espada*> espadas;
+	std::vector<Espada2*> espadas2;
 };
 
 #endif // __SCENE_H__

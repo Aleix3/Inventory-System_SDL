@@ -110,21 +110,37 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		/*app->audio->PlayFx(pickCoinFxId);*/
 		break;
 	case ColliderType::ESPADA:
-		espadaid = (app->scene->GetEspadaId(physB));
-		if (app->entityManager->FindEntityById(espadaid) != nullptr)
+		if (app->inventoryManager->IsFull() == false)
 		{
-			app->inventoryManager->CreateItem(app->entityManager->FindEntityById(espadaid)->data->type, app->entityManager->FindEntityById(espadaid)->data->id, app->entityManager->FindEntityById(espadaid)->data->ataque, app->entityManager->FindEntityById(espadaid)->data->durabilidad, app->entityManager->FindEntityById(espadaid)->data->magia, app->entityManager->FindEntityById(espadaid)->data->peso);
+			espadaid = (app->scene->GetEspadaId(physB));
+			if (app->entityManager->FindEntityById(espadaid) != nullptr)
+			{
+				app->inventoryManager->CreateItem(app->entityManager->FindEntityById(espadaid)->data->type, app->entityManager->FindEntityById(espadaid)->data->id, app->entityManager->FindEntityById(espadaid)->data->ataque, app->entityManager->FindEntityById(espadaid)->data->durabilidad, app->entityManager->FindEntityById(espadaid)->data->magia, app->entityManager->FindEntityById(espadaid)->data->peso);
 
+			}
+			app->entityManager->DestroyEntity2(espadaid);
+			/*app->inventoryManager->CreateItem()*/
+			espadas = 1;
 		}
-		app->entityManager->DestroyEntity2(espadaid);
-		/*app->inventoryManager->CreateItem()*/
-		espadas = 1;
+		
 		LOG("Collision PLATFORM");
 		break;
 	case ColliderType::ESPADA2:
-		app->entityManager->DestroyEntity2(app->scene->GetEspada2()->id);
+		if (app->inventoryManager->IsFull() == false)
+		{
+			espadaid = (app->scene->GetEspada2Id(physB));
+			if (app->entityManager->FindEntityById(espadaid) != nullptr)
+			{
+				app->inventoryManager->CreateItem(app->entityManager->FindEntityById(espadaid)->data->type, app->entityManager->FindEntityById(espadaid)->data->id, app->entityManager->FindEntityById(espadaid)->data->ataque, app->entityManager->FindEntityById(espadaid)->data->durabilidad, app->entityManager->FindEntityById(espadaid)->data->magia, app->entityManager->FindEntityById(espadaid)->data->peso);
 
-		espadas = 2;
+			}
+			app->entityManager->DestroyEntity2(espadaid);
+			/*app->inventoryManager->CreateItem()*/
+			espadas = 2;
+		}
+		
+
+		
 		LOG("Collision PLATFORM");
 		break;
 	case ColliderType::UNKNOWN:

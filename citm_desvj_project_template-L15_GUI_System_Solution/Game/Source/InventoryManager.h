@@ -45,6 +45,8 @@ public:
 
 	void OnMovePointer();
 
+	bool InventoryManager::IsFull();
+
 	
 
 public:
@@ -52,15 +54,23 @@ public:
 
 
 	List<Inventity*> inventities;
-	iPoint PointerPosition;
+	iPoint PointerPosition = { 125,-75 };
+	int PointerId = 0;
+	iPoint selected = { -1000,-1000 };
+	int selectedId = -1;
 	iPoint InventorySize;
 	SDL_Texture* InventoryBackground;
+	SDL_Texture* SelectItemText;
 	SDL_Texture* SelectedItemText;
 	SDL_Texture* EquipedItemText;
 
 	SDL_Texture* Backtexture;
 	uint texW, texH;
 	bool mostrar = false;
+
+
+	int highestIde = -1;
+
 
 };
 
