@@ -77,18 +77,25 @@ bool Player::Update(float dt)
 	position.x = METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2;
 	position.y = METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2;
 
-	app->render->DrawTexture(texture,position.x,position.y);
+	
 
-	if (espadaMadera)
+	if (espadaMadera == true && espadaHierro == false)
 	{
-		texture = app->tex->Load("Assets/Textures/playeresp1.png");
+		
+		app->render->DrawTexture(app->tex->Load("Assets/Textures/playeresp1.png"), position.x, position.y);
 		manollena = true;
 	}
 
-	if (espadaHierro)
+	if (espadaHierro == true && espadaMadera == false)
 	{
-		texture = app->tex->Load("Assets/Textures/playeresp2.png");
+		
+		app->render->DrawTexture(app->tex->Load("Assets/Textures/playeresp2.png"), position.x, position.y);
 		manollena = true;
+	}
+
+	if(espadaMadera == false && espadaHierro == false)
+	{
+		app->render->DrawTexture(texture, position.x, position.y);
 	}
 	return true;
 }

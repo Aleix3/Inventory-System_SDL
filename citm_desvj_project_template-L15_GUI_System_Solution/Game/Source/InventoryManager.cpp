@@ -47,6 +47,7 @@ bool InventoryManager::Start() {
 	Backtexture = app->tex->Load("Assets/Textures/inventario.png");
 	SelectItemText = app->tex->Load("Assets/Textures/select.png");
 	SelectedItemText = app->tex->Load("Assets/Textures/selected.png");
+	EquipedItemText = app->tex->Load("Assets/Textures/equiped.png");
 
 	bool ret = true; 
 
@@ -215,12 +216,14 @@ void InventoryManager::UseItemSelected(int id)
 	{
 		item->data->active = false;
 	}*/
+	bool foundMatchingID = false;
 
 	for (item = inventities.start; item != NULL; item = item->next)
 	{
 
 		if (item->data->id == id) // Comprueba si el ID coincide
 		{
+			 foundMatchingID = true;
 			item->data->active = true;
 			switch (item->data->type)
 			{
@@ -244,19 +247,14 @@ void InventoryManager::UseItemSelected(int id)
 				}
 			case InventityType::ESPADA2:
 				{
-					app->scene->GetPlayer()->espadaHierro = true;
-					app->scene->GetPlayer()->espadaMadera = false;
+				app->scene->GetPlayer()->espadaHierro = true;
+				app->scene->GetPlayer()->espadaMadera = false;
+				Swordinv* espada = dynamic_cast<Swordinv*>(item->data); // Convierte a Espada si es posible
 
-					Espada2* espada2 = dynamic_cast<Espada2*>(item->data); // Convierte a Espada si es posible
-
-
-					
-						app->scene->GetPlayer()->espadaMadera = true;
-						app->scene->GetPlayer()->espadaHierro = false;
-						app->scene->GetPlayer()->ataque = espada2->ataque;
-						app->scene->GetPlayer()->durabilidadArma = espada2->durabilidad;
-						app->scene->GetPlayer()->magia = espada2->magia;
-						app->scene->GetPlayer()->peso = espada2->peso;
+				app->scene->GetPlayer()->ataque = espada->damage;
+				app->scene->GetPlayer()->durabilidadArma = espada->durability;
+				app->scene->GetPlayer()->magia = espada->magic;
+				app->scene->GetPlayer()->peso = espada->weight;
 					
 					
 					break;
@@ -268,7 +266,11 @@ void InventoryManager::UseItemSelected(int id)
 
 
 	}
-
+	if (!foundMatchingID)
+	{
+		app->scene->GetPlayer()->espadaMadera = false;
+		app->scene->GetPlayer()->espadaHierro = false;
+	}
 }
 
 void InventoryManager::RemoveItemSelected()
@@ -316,22 +318,34 @@ bool InventoryManager::Update(float dt)
 		OnMovePointer();
 
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
+			options = true;
 			selected = { PointerPosition.x, PointerPosition.y };
 			selectedId = PointerId;
 			
 		}
 
-		if (app->input->GetKey(SDL_SCANCODE_BACKSPACE) == KEY_DOWN)
+		if (options == true)
 		{
-			DestroyItem2(selectedId);
+			if (app->input->GetKey(SDL_SCANCODE_BACKSPACE) == KEY_DOWN)
+			{
+				DestroyItem2(selectedId);
+				 options = false;
+				 selected = { -1000, -1000 };
 
+			}
+
+			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+			{
+				equiped = { PointerPosition.x, PointerPosition.y };
+				equipedId = PointerId;
+				UseItemSelected(equipedId);
+				 options = false;
+				 selected = { -1000, -1000 };
+
+			}
 		}
 
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-		{
-			UseItemSelected(selectedId);
-
-		}
+		
 
 	}
 
@@ -358,8 +372,13 @@ bool InventoryManager::PostUpdate()
 		ListItem<Inventity*>* item;
 		Inventity* pEntity = NULL;
 		app->render->DrawTexture(Backtexture, texW / 8, texH / 8 - 200);
-		app->render->DrawTexture(SelectItemText, PointerPosition.x, PointerPosition.y);//75//76
 		
+		
+		
+
+		app->render->DrawTexture(EquipedItemText, equiped.x, equiped.y);
+
+		app->render->DrawTexture(SelectItemText, PointerPosition.x, PointerPosition.y);
 		app->render->DrawTexture(SelectedItemText, selected.x, selected.y);
 		for (item = inventities.start; item != NULL && ret == true; item = item->next)
 		{

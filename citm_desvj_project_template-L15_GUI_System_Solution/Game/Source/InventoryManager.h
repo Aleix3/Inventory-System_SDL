@@ -57,7 +57,9 @@ public:
 	iPoint PointerPosition = { 125,-75 };
 	int PointerId = 0;
 	iPoint selected = { -1000,-1000 };
+	iPoint equiped = { -1000,-1000 };
 	int selectedId = -1;
+	int equipedId = -1;
 	iPoint InventorySize;
 	SDL_Texture* InventoryBackground;
 	SDL_Texture* SelectItemText;
@@ -67,7 +69,7 @@ public:
 	SDL_Texture* Backtexture;
 	uint texW, texH;
 	bool mostrar = false;
-
+	bool options = false;
 
 	int highestIde = -1;
 
