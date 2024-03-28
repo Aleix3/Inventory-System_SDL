@@ -133,7 +133,7 @@ void EntityManager::DestroyEntity2(int entityId)
 	}
 }
 
-ListItem<Entity*>* EntityManager::FindEntityById(int entityId)
+Espada* EntityManager::FindEspadaById(int entityId)
 {
 	ListItem<Entity*>* item;
 	
@@ -143,7 +143,39 @@ ListItem<Entity*>* EntityManager::FindEntityById(int entityId)
 		{
 			if (item->data->id == entityId && entityId > 0) // Comprueba si el ID coincide
 			{
-				return item; // Devuelve el elemento si encuentra el ID
+				switch (item->data->type)
+				{
+				case EntityType::ESPADA:
+					Espada* espada = dynamic_cast<Espada*>(item->data);
+					return espada;
+					break;
+				}
+				 // Devuelve el elemento si encuentra el ID
+			}
+		}
+	}
+
+	return NULL; // Devuelve NULL si no se encuentra el ID
+}
+
+Espada2* EntityManager::FindEspada2ById(int entityId)
+{
+	ListItem<Entity*>* item;
+
+	for (item = entities.start; item != NULL; item = item->next)
+	{
+		if (item->data->id != 0)
+		{
+			if (item->data->id == entityId && entityId > 0) // Comprueba si el ID coincide
+			{
+				switch (item->data->type)
+				{
+				case EntityType::ESPADA2:
+					Espada2* espada = dynamic_cast<Espada2*>(item->data);
+					return espada;
+					break;
+				}
+				// Devuelve el elemento si encuentra el ID
 			}
 		}
 	}

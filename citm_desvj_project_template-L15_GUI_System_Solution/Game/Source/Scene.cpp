@@ -51,7 +51,7 @@ bool Scene::Awake(pugi::xml_node config)
 	int a = 1;
 	for (pugi::xml_node itemNode = config.child("espada"); itemNode; itemNode = itemNode.next_sibling("espada"))
 	{
-		espada = (Espada*)app->entityManager->CreateEntity(EntityType::ESPADA, 1, 0, 0, 0, 0);
+		espada = (Espada*)app->entityManager->CreateEntity(EntityType::ESPADA, 1, 20, 100, 30, 2);
 		espada->parameters = itemNode;
 		
 		espada->id = a;
@@ -63,7 +63,7 @@ bool Scene::Awake(pugi::xml_node config)
 	
 	
 	
-	espada2 = (Espada2*)app->entityManager->CreateEntity(EntityType::ESPADA2,100, 0, 0, 0, 0);
+	espada2 = (Espada2*)app->entityManager->CreateEntity(EntityType::ESPADA2,100, 100, 200, 20, 5);
 	espada2->id = 100;
 	espadas2.push_back(espada2);
 
@@ -197,6 +197,10 @@ Espada* Scene::GetEspada()
 Espada2* Scene::GetEspada2()
 {
 	return espada2;
+}
+Player* Scene::GetPlayer()
+{
+	return player;
 }
 
 int Scene::GetEspadaId(PhysBody* physBody) const {

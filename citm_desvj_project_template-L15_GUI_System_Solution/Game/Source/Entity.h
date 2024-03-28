@@ -84,7 +84,7 @@ public:
 public:
 
 	int id;
-	int ataque = 100;
+	int ataque;
 	int durabilidad; // Durabilidad de la espada
 	int magia;
 	float peso; // Peso de la espada

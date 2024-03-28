@@ -79,13 +79,13 @@ bool Player::Update(float dt)
 
 	app->render->DrawTexture(texture,position.x,position.y);
 
-	if (espadas == 1 && manollena == false)
+	if (espadaMadera)
 	{
 		texture = app->tex->Load("Assets/Textures/playeresp1.png");
 		manollena = true;
 	}
 
-	if (espadas == 2 && manollena == false)
+	if (espadaHierro)
 	{
 		texture = app->tex->Load("Assets/Textures/playeresp2.png");
 		manollena = true;
@@ -113,11 +113,13 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		if (app->inventoryManager->IsFull() == false)
 		{
 			espadaid = (app->scene->GetEspadaId(physB));
-			if (app->entityManager->FindEntityById(espadaid) != nullptr)
+			if (app->entityManager->FindEspadaById(espadaid) != nullptr)
 			{
-				app->inventoryManager->CreateItem(app->entityManager->FindEntityById(espadaid)->data->type, app->entityManager->FindEntityById(espadaid)->data->id, app->entityManager->FindEntityById(espadaid)->data->ataque, app->entityManager->FindEntityById(espadaid)->data->durabilidad, app->entityManager->FindEntityById(espadaid)->data->magia, app->entityManager->FindEntityById(espadaid)->data->peso);
+				app->inventoryManager->CreateItem(app->entityManager->FindEspadaById(espadaid)->type, app->entityManager->FindEspadaById(espadaid)->id, app->entityManager->FindEspadaById(espadaid)->ataque, app->entityManager->FindEspadaById(espadaid)->durabilidad, app->entityManager->FindEspadaById(espadaid)->magia, app->entityManager->FindEspadaById(espadaid)->peso);
 
 			}
+			
+
 			app->entityManager->DestroyEntity2(espadaid);
 			/*app->inventoryManager->CreateItem()*/
 			espadas = 1;
@@ -129,9 +131,9 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		if (app->inventoryManager->IsFull() == false)
 		{
 			espadaid = (app->scene->GetEspada2Id(physB));
-			if (app->entityManager->FindEntityById(espadaid) != nullptr)
+			if (app->entityManager->FindEspada2ById(espadaid) != nullptr)
 			{
-				app->inventoryManager->CreateItem(app->entityManager->FindEntityById(espadaid)->data->type, app->entityManager->FindEntityById(espadaid)->data->id, app->entityManager->FindEntityById(espadaid)->data->ataque, app->entityManager->FindEntityById(espadaid)->data->durabilidad, app->entityManager->FindEntityById(espadaid)->data->magia, app->entityManager->FindEntityById(espadaid)->data->peso);
+				app->inventoryManager->CreateItem(app->entityManager->FindEspada2ById(espadaid)->type, app->entityManager->FindEspada2ById(espadaid)->id, app->entityManager->FindEspada2ById(espadaid)->ataque, app->entityManager->FindEspada2ById(espadaid)->durabilidad, app->entityManager->FindEspada2ById(espadaid)->magia, app->entityManager->FindEspada2ById(espadaid)->peso);
 
 			}
 			app->entityManager->DestroyEntity2(espadaid);

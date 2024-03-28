@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Entity.h"
 #include "List.h"
+#include "espada.h"
 
 class EntityManager : public Module
 {
@@ -33,7 +34,9 @@ public:
 
 	void EntityManager::DestroyEntity2(int entityId);
 
-	ListItem<Entity*>* EntityManager::FindEntityById(int entityId);
+	Espada* EntityManager::FindEspadaById(int entityId);
+
+	Espada2* EntityManager::FindEspada2ById(int entityId);
 
 	void AddEntity(Entity* entity);
 

@@ -47,6 +47,8 @@ public:
 
 	Espada2* GetEspada2();
 
+	Player* GetPlayer();
+
 	int Scene::GetEspadaId(PhysBody* physBody) const;
 
 	int Scene::GetEspada2Id(PhysBody* physBody) const;

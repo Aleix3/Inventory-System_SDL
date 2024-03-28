@@ -39,7 +39,7 @@ public:
 
 	void InventoryManager::DestroyItem2(int entityId);
 
-	void UseItemSelected();
+	void UseItemSelected(int id);
 
 	void RemoveItemSelected();
 

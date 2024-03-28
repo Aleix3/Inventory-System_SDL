@@ -41,6 +41,16 @@ public:
 	int espadaid;
 	int espadas = 0;
 	PhysBody* pbody;
+
+	bool espadaMadera = false;
+	bool espadaHierro = false;
+
+
+
+	int ataque;
+	int durabilidadArma;
+	int magia;
+	int peso;
 };
 
 #endif // __PLAYER_H__

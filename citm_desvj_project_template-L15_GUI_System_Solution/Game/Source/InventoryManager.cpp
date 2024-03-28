@@ -115,6 +115,7 @@ Inventity* InventoryManager::CreateItem(EntityType type, int id, int ataque, int
 		sword->type = InventityType::ESPADA;
 		sword->damage = ataque;
 		sword->durability = durabilidad;
+		sword->magic = magia;
 		sword->weight = peso;
 		sword->icon = app->tex->Load("Assets/Textures/espmadIcon.png");
 		entity = sword;
@@ -132,7 +133,7 @@ Inventity* InventoryManager::CreateItem(EntityType type, int id, int ataque, int
 
 		Swordinv* sword = new Swordinv();
 		sword->id = highestId + 1;
-		sword->type = InventityType::ESPADA;
+		sword->type = InventityType::ESPADA2;
 		sword->damage = ataque;
 		sword->durability = durabilidad;
 		sword->weight = peso;
@@ -205,8 +206,69 @@ void InventoryManager::DestroyItem2(int entityId)
 	}
 }
 
-void InventoryManager::UseItemSelected()
+void InventoryManager::UseItemSelected(int id)
 {
+
+	ListItem<Inventity*>* item;
+
+	/*for (item = inventities.start; item != NULL; item = item->next)
+	{
+		item->data->active = false;
+	}*/
+
+	for (item = inventities.start; item != NULL; item = item->next)
+	{
+
+		if (item->data->id == id) // Comprueba si el ID coincide
+		{
+			item->data->active = true;
+			switch (item->data->type)
+			{
+			case InventityType::ESPADA:
+				{
+					app->scene->GetPlayer()->espadaHierro = false;
+					app->scene->GetPlayer()->espadaMadera = true;
+					Swordinv* espada = dynamic_cast<Swordinv*>(item->data); // Convierte a Espada si es posible
+
+						app->scene->GetPlayer()->espadaMadera = true;
+						app->scene->GetPlayer()->espadaHierro = false;
+						app->scene->GetPlayer()->ataque = espada->damage;
+						app->scene->GetPlayer()->durabilidadArma = espada->durability;
+						app->scene->GetPlayer()->magia = espada->magic;
+						app->scene->GetPlayer()->peso = espada->weight;
+					
+					
+
+					
+					break;
+				}
+			case InventityType::ESPADA2:
+				{
+					app->scene->GetPlayer()->espadaHierro = true;
+					app->scene->GetPlayer()->espadaMadera = false;
+
+					Espada2* espada2 = dynamic_cast<Espada2*>(item->data); // Convierte a Espada si es posible
+
+
+					
+						app->scene->GetPlayer()->espadaMadera = true;
+						app->scene->GetPlayer()->espadaHierro = false;
+						app->scene->GetPlayer()->ataque = espada2->ataque;
+						app->scene->GetPlayer()->durabilidadArma = espada2->durabilidad;
+						app->scene->GetPlayer()->magia = espada2->magia;
+						app->scene->GetPlayer()->peso = espada2->peso;
+					
+					
+					break;
+				}
+			}
+
+			
+		}
+
+
+	}
+
 }
 
 void InventoryManager::RemoveItemSelected()
@@ -264,6 +326,13 @@ bool InventoryManager::Update(float dt)
 			DestroyItem2(selectedId);
 
 		}
+
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		{
+			UseItemSelected(selectedId);
+
+		}
+
 	}
 
 	

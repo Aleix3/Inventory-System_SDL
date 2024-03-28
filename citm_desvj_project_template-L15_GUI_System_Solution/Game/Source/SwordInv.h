@@ -29,6 +29,7 @@ public:
 	
 	int damage;
 	int durability;
+	int magic;
 	int weight;
 
 	
