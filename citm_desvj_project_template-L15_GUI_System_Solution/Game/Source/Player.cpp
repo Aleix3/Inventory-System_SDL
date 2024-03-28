@@ -152,6 +152,21 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		
 		LOG("Collision PLATFORM");
 		break;
+
+	case ColliderType::ARMADURA:
+	{
+		if (app->inventoryManager->IsFull() == false)
+		{
+			armaduraid = (app->scene->GetArmaduraId(physB));
+			if (app->entityManager->FindArmaduraById(espadaid) != nullptr)
+			{
+				app->inventoryManager->CreateItem(app->entityManager->FindArmaduraById(espadaid)->type, app->entityManager->FindArmaduraById(espadaid)->id, app->entityManager->FindArmaduraById(espadaid)->ataque, app->entityManager->FindArmaduraById(espadaid)->durabilidad, app->entityManager->FindArmaduraById(espadaid)->magia, app->entityManager->FindArmaduraById(espadaid)->peso);
+
+			}
+			app->entityManager->DestroyEntity2(armaduraid);
+
+		}
+	}
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
 		break;

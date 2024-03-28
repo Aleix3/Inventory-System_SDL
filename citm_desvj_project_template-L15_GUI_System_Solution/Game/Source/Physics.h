@@ -29,6 +29,7 @@ enum class ColliderType {
 	PLATFORM, 
 	ESPADA,
 	ESPADA2,
+	ARMADURA,
 	UNKNOWN
 	// ..
 };

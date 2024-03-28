@@ -5,6 +5,7 @@
 #include "Entity.h"
 #include "List.h"
 #include "espada.h"
+#include "armadura.h"
 
 class EntityManager : public Module
 {
@@ -28,7 +29,7 @@ public:
 	bool CleanUp();
 
 	// Additional methods
-	Entity* CreateEntity(EntityType type, int id, int ataque, int durabilidad, int magia, float peso);
+	Entity* CreateEntity(EntityType type, int id, int ataque, int durabilidad, int magia, float peso,int defensa);
 
 	void DestroyEntity(Entity* entity);
 
@@ -37,6 +38,8 @@ public:
 	Espada* EntityManager::FindEspadaById(int entityId);
 
 	Espada2* EntityManager::FindEspada2ById(int entityId);
+
+	Armadura* EntityManager::FindArmaduraById(int entityId);
 
 	void AddEntity(Entity* entity);
 

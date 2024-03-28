@@ -12,6 +12,7 @@ enum class EntityType
 	ITEM,
 	ESPADA,
 	ESPADA2,
+	ARMADURA,
 	UNKNOWN
 };
 

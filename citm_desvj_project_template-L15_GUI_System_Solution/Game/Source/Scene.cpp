@@ -31,7 +31,7 @@ bool Scene::Awake(pugi::xml_node config)
 
 	//L03: DONE 3b: Instantiate the player using the entity manager
 	//L04 DONE 7: Get player paremeters
-	player = (Player*) app->entityManager->CreateEntity(EntityType::PLAYER,0,0,0,0,0);
+	player = (Player*) app->entityManager->CreateEntity(EntityType::PLAYER,0,0,0,0,0,0);
 	
 	//Assigns the XML node to a member in player
 	player->config = config.child("player");
@@ -44,14 +44,14 @@ bool Scene::Awake(pugi::xml_node config)
 	// Check https://pugixml.org/docs/quickstart.html#access
 	for (pugi::xml_node itemNode = config.child("item"); itemNode; itemNode = itemNode.next_sibling("item"))
 	{
-		Item* item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM,0,0,0,0,0);
+		Item* item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM,0,0,0,0,0,0);
 		item->parameters = itemNode;
 	}
 
 	int a = 1;
 	for (pugi::xml_node itemNode = config.child("espada"); itemNode; itemNode = itemNode.next_sibling("espada"))
 	{
-		espada = (Espada*)app->entityManager->CreateEntity(EntityType::ESPADA, 1, 20, 100, 30, 2);
+		espada = (Espada*)app->entityManager->CreateEntity(EntityType::ESPADA, 1, 20, 100, 30, 2, 0);
 		espada->parameters = itemNode;
 		
 		espada->id = a;
@@ -60,12 +60,24 @@ bool Scene::Awake(pugi::xml_node config)
 		a++;
 	}
 	
+	int b = 200;
+	for (pugi::xml_node itemNode = config.child("armadura"); itemNode; itemNode = itemNode.next_sibling("armadura"))
+	{
+		armadura = (Armadura*)app->entityManager->CreateEntity(EntityType::ARMADURA, 100, 300, 0, 300, 50, 200);
+		armadura->parameters = itemNode;
+
+		armadura->id = b;
+
+		armaduras.push_back(armadura);
+		b++;
+	}
 	
 	
-	
-	espada2 = (Espada2*)app->entityManager->CreateEntity(EntityType::ESPADA2,100, 100, 200, 20, 5);
+	espada2 = (Espada2*)app->entityManager->CreateEntity(EntityType::ESPADA2,100, 100, 200, 20, 5, 0);
 	espada2->id = 100;
 	espadas2.push_back(espada2);
+
+	
 
 	
 	
@@ -224,6 +236,20 @@ int Scene::GetEspada2Id(PhysBody* physBody) const {
 		if (espadas2->pbody == physBody) {
 			// Si coincide, devuelve el identificador único de la espada 2
 			return espadas2->id;
+		}
+	}
+
+	// Si no se encuentra el cuerpo físico, devuelve un valor que indique que no se encontró la espada
+	return -1;
+}
+
+int Scene::GetArmaduraId(PhysBody* physBody) const {
+	// Itera sobre todas las espadas 2 en la escena
+	for (const auto& armaduras : armaduras) {
+		// Comprueba si el cuerpo físico de la espada 2 coincide con el pasado como argumento
+		if (armaduras->pbody == physBody) {
+			// Si coincide, devuelve el identificador único de la espada 2
+			return armaduras->id;
 		}
 	}
 

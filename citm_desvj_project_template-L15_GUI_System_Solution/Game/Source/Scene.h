@@ -6,6 +6,7 @@
 #include "GuiControl.h"
 #include "GuiControlButton.h"
 #include "espada.h"
+#include "armadura.h"
 #include <vector>
 
 struct SDL_Texture;
@@ -49,9 +50,14 @@ public:
 
 	Player* GetPlayer();
 
+	
+
 	int Scene::GetEspadaId(PhysBody* physBody) const;
 
 	int Scene::GetEspada2Id(PhysBody* physBody) const;
+
+	int Scene::GetArmaduraId(PhysBody* physBody) const;
+
 
 private:
 	SDL_Texture* img;
@@ -67,8 +73,10 @@ private:
 	GuiControlButton* gcButtom;
 	Espada* espada;
 	Espada2* espada2;
+	Armadura* armadura;
 	std::vector<Espada*> espadas;
 	std::vector<Espada2*> espadas2;
+	std::vector<Armadura*> armaduras;
 };
 
 #endif // __SCENE_H__

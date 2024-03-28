@@ -39,6 +39,7 @@ public:
 
 	bool manollena = false;
 	int espadaid;
+	int armaduraid;
 	int espadas = 0;
 	PhysBody* pbody;
 

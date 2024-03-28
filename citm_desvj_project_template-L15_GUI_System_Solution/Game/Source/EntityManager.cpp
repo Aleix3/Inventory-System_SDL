@@ -5,6 +5,7 @@
 #include "Textures.h"
 #include "Scene.h"
 #include "espada.h"
+#include "armadura.h"
 #include "Defs.h"
 #include "Log.h"
 
@@ -76,7 +77,7 @@ bool EntityManager::CleanUp()
 	return ret;
 }
 
-Entity* EntityManager::CreateEntity(EntityType type, int id, int ataque, int durabilidad, int magia, float peso)
+Entity* EntityManager::CreateEntity(EntityType type, int id, int ataque, int durabilidad, int magia, float peso,int defensa)
 {
 	Entity* entity = nullptr; 
 
@@ -94,6 +95,9 @@ Entity* EntityManager::CreateEntity(EntityType type, int id, int ataque, int dur
 		break;
 	case EntityType::ESPADA2:
 		entity = new Espada2(type, ataque, durabilidad, magia, peso);
+		break;
+	case EntityType::ARMADURA:
+		entity = new Armadura(type, id, defensa, durabilidad, magia, peso);
 		break;
 	default:
 		break;
@@ -173,6 +177,31 @@ Espada2* EntityManager::FindEspada2ById(int entityId)
 				case EntityType::ESPADA2:
 					Espada2* espada = dynamic_cast<Espada2*>(item->data);
 					return espada;
+					break;
+				}
+				// Devuelve el elemento si encuentra el ID
+			}
+		}
+	}
+
+	return NULL; // Devuelve NULL si no se encuentra el ID
+}
+
+Armadura* EntityManager::FindArmaduraById(int entityId)
+{
+	ListItem<Entity*>* item;
+
+	for (item = entities.start; item != NULL; item = item->next)
+	{
+		if (item->data->id != 0)
+		{
+			if (item->data->id == entityId && entityId > 0) // Comprueba si el ID coincide
+			{
+				switch (item->data->type)
+				{
+				case EntityType::ARMADURA:
+					Armadura* armadura = dynamic_cast<Armadura*>(item->data);
+					return armadura;
 					break;
 				}
 				// Devuelve el elemento si encuentra el ID
