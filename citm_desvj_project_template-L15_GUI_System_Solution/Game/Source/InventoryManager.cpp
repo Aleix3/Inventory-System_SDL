@@ -104,13 +104,22 @@ Inventity* InventoryManager::CreateItem(EntityType type, int id, int ataque, int
 			item->data->id = newId;
 			newId++;
 		}
-		for (ListItem<Inventity*>* item = inventities.start; item != NULL; item = item->next)
+		/*for (ListItem<Inventity*>* item = inventities.start; item != NULL; item = item->next) 
 		{
 			if (item->data->id > highestId)
 			{
 				highestId = item->data->id;
 			}
+		}*/
+		if (inventities.Count() > 0)
+		{
+			highestId = inventities.end->data->id;
 		}
+		else
+		{
+			highestId = -1;
+		}
+		
 
 		Swordinv* sword = new Swordinv();
 		sword->id = highestId+1;
