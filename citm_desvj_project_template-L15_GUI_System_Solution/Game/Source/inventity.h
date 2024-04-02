@@ -11,6 +11,7 @@ enum class InventityType
 	ITEM,
 	ESPADA,
 	ESPADA2,
+	ARMADURA,
 	UNKNOWN
 };
 

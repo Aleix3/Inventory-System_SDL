@@ -8,6 +8,7 @@
 #include "espada.h"
 #include "inventity.h"
 #include "SwordInv.h"
+#include "ArmaduraInv.h"
 #include "Defs.h"
 #include "Log.h"
 
@@ -84,7 +85,7 @@ bool InventoryManager::CleanUp()
 	return ret;
 }
 int highestId = -1;
-Inventity* InventoryManager::CreateItem(EntityType type, int id, int ataque, int durabilidad, int magia, float peso)
+Inventity* InventoryManager::CreateItem(EntityType type, int id, int ataque, int durabilidad, int magia, float peso, int defensa)
 {
 	Inventity* entity = nullptr;
 
@@ -142,6 +143,25 @@ Inventity* InventoryManager::CreateItem(EntityType type, int id, int ataque, int
 		entity = sword;
 
 		break;
+	}
+	case EntityType::ARMADURA:
+	{
+		for (ListItem<Inventity*>* item = inventities.start; item != NULL; item = item->next)
+		{
+			if (item->data->id > highestId)
+			{
+				highestId = item->data->id;
+			}
+		}
+
+		ArmaduraInv* armadura = new ArmaduraInv();
+		armadura->id = highestId + 1;
+		armadura->type = InventityType::ARMADURA;
+		armadura->defense = defensa;
+		armadura->durability = durabilidad;
+		armadura->weight = peso;
+		armadura->icon = app->tex->Load("Assets/Textures/armaduraicon.png");
+		entity = armadura;
 	}
 		
 	default:

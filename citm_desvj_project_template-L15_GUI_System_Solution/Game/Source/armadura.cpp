@@ -31,7 +31,7 @@ bool Armadura::Start() {
 	//initilize textures
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
-	texture = app->tex->Load("Assets/Textures/armadura2.png");
+	texture = app->tex->Load("Assets/Textures/armadura.png");
 	
 	// L07 DONE 4: Add a physics to an item - initialize the physics body
 	app->tex->GetSize(texture, texW, texH);

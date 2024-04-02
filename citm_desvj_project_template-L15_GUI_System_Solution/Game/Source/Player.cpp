@@ -158,9 +158,9 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		if (app->inventoryManager->IsFull() == false)
 		{
 			armaduraid = (app->scene->GetArmaduraId(physB));
-			if (app->entityManager->FindArmaduraById(espadaid) != nullptr)
+			if (app->entityManager->FindArmaduraById(armaduraid) != nullptr)
 			{
-				app->inventoryManager->CreateItem(app->entityManager->FindArmaduraById(espadaid)->type, app->entityManager->FindArmaduraById(espadaid)->id, app->entityManager->FindArmaduraById(espadaid)->ataque, app->entityManager->FindArmaduraById(espadaid)->durabilidad, app->entityManager->FindArmaduraById(espadaid)->magia, app->entityManager->FindArmaduraById(espadaid)->peso);
+				app->inventoryManager->CreateItem(app->entityManager->FindArmaduraById(armaduraid)->type, app->entityManager->FindArmaduraById(armaduraid)->id, app->entityManager->FindArmaduraById(armaduraid)->ataque, app->entityManager->FindArmaduraById(armaduraid)->durabilidad, app->entityManager->FindArmaduraById(armaduraid)->magia, app->entityManager->FindArmaduraById(armaduraid)->peso, app->entityManager->FindArmaduraById(armaduraid)->defensa);
 
 			}
 			app->entityManager->DestroyEntity2(armaduraid);
