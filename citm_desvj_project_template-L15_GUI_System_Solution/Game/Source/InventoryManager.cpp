@@ -476,15 +476,26 @@ bool InventoryManager::PostUpdate()
 		for (item = inventities.start; item != NULL && ret == true; item = item->next)
 		{
 			pEntity = item->data;
-			if (pEntity->id < 5) //if(inventities.cout() < 5)
+			if (pEntity->quantity < 1)
 			{
-				app->render->DrawTexture(pEntity->icon, 445 + pEntity->id * 75, 300);
+				if (pEntity->id < 5) //if(inventities.cout() < 5)
+				{
+					app->render->DrawTexture(pEntity->icon, 445 + pEntity->id * 75, 300);
+				}
+				else
+				{
+
+					app->render->DrawTexture(pEntity->icon, 445 + ((pEntity->id - 5) * 75), 380);
+				}
+				
 			}
 			else
 			{
-				
-				app->render->DrawTexture(pEntity->icon, 445 + ((pEntity->id-5) * 75), 380);
+
+				app->render->DrawTexture(pEntity->icon, 445, 380);
+
 			}
+			
 			
 			
 			
