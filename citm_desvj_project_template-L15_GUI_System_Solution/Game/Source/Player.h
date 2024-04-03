@@ -45,6 +45,7 @@ public:
 
 	bool espadaMadera = false;
 	bool espadaHierro = false;
+	bool armaduraPoner = false;
 
 
 

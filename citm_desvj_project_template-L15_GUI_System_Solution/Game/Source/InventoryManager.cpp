@@ -1,3 +1,4 @@
+
 #include "EntityManager.h"
 #include "InventoryManager.h"
 #include "Player.h"
@@ -260,6 +261,7 @@ void InventoryManager::UseItemSelected(int id)
 				{
 					app->scene->GetPlayer()->espadaHierro = false;
 					app->scene->GetPlayer()->espadaMadera = true;
+					app->scene->GetPlayer()->armaduraPoner = false;
 					Swordinv* espada = dynamic_cast<Swordinv*>(item->data); // Convierte a Espada si es posible
 
 						app->scene->GetPlayer()->espadaMadera = true;
@@ -278,6 +280,7 @@ void InventoryManager::UseItemSelected(int id)
 				{
 				app->scene->GetPlayer()->espadaHierro = true;
 				app->scene->GetPlayer()->espadaMadera = false;
+				app->scene->GetPlayer()->armaduraPoner = false;
 				Swordinv* espada = dynamic_cast<Swordinv*>(item->data); // Convierte a Espada si es posible
 
 				app->scene->GetPlayer()->ataque = espada->damage;
@@ -288,6 +291,21 @@ void InventoryManager::UseItemSelected(int id)
 					
 					break;
 				}
+			case InventityType::ARMADURA:
+			{
+				app->scene->GetPlayer()->armaduraPoner = true;
+				app->scene->GetPlayer()->espadaMadera = false;
+				app->scene->GetPlayer()->espadaHierro = false;
+				Swordinv* espada = dynamic_cast<Swordinv*>(item->data); // Convierte a Espada si es posible
+
+				//app->scene->GetPlayer()->ataque = espada->damage;
+				//app->scene->GetPlayer()->durabilidadArma = espada->durability;
+				//app->scene->GetPlayer()->magia = espada->magic;
+				//app->scene->GetPlayer()->peso = espada->weight;
+
+
+				break;
+			}
 			}
 
 			
@@ -299,6 +317,7 @@ void InventoryManager::UseItemSelected(int id)
 	{
 		app->scene->GetPlayer()->espadaMadera = false;
 		app->scene->GetPlayer()->espadaHierro = false;
+		app->scene->GetPlayer()->armaduraPoner = false;
 	}
 }
 

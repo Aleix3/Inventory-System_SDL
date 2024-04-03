@@ -77,26 +77,41 @@ bool Player::Update(float dt)
 	position.x = METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2;
 	position.y = METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2;
 
+	if (armaduraPoner == true)
+	{
+		espadaHierro = false;
+		espadaMadera = false;
+		texture = app->tex->Load("Assets/Textures/playerArmadura.png");
+		
+	}
+
+	if (espadaMadera == true)
+	{
+		
+		
+		manollena = true;
+		armaduraPoner = false;
+		texture = app->tex->Load("Assets/Textures/playeresp1.png");
+	}
+
+	if (espadaHierro == true)
+	{
+		
+		
+		manollena = true;
+		armaduraPoner = false;
+		texture = app->tex->Load("Assets/Textures/playeresp2.png");
+	}
+	if (espadaMadera == false && espadaHierro == false && armaduraPoner == false)
+	{
+		texture = app->tex->Load("Assets/Textures/player1.png");
+	}
+	
+	
+		app->render->DrawTexture(texture, position.x, position.y);
 	
 
-	if (espadaMadera == true && espadaHierro == false)
-	{
-		
-		app->render->DrawTexture(app->tex->Load("Assets/Textures/playeresp1.png"), position.x, position.y);
-		manollena = true;
-	}
-
-	if (espadaHierro == true && espadaMadera == false)
-	{
-		
-		app->render->DrawTexture(app->tex->Load("Assets/Textures/playeresp2.png"), position.x, position.y);
-		manollena = true;
-	}
-
-	if(espadaMadera == false && espadaHierro == false)
-	{
-		app->render->DrawTexture(texture, position.x, position.y);
-	}
+	
 	return true;
 }
 
