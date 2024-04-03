@@ -25,9 +25,10 @@ public:
 public:
 
 	bool isPicked = false;
-
+	PhysBody* pbody;
 private:
 
+	
 	SDL_Texture* texture;
 	const char* texturePath;
 	uint texW, texH;

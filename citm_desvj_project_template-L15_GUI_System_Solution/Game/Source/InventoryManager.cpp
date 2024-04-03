@@ -10,6 +10,7 @@
 #include "inventity.h"
 #include "SwordInv.h"
 #include "ArmaduraInv.h"
+#include "ItemInv.h"
 #include "Defs.h"
 #include "Log.h"
 
@@ -94,7 +95,32 @@ Inventity* InventoryManager::CreateItem(EntityType type, int id, int ataque, int
 	//L03: DONE 3a: Instantiate entity according to the type and add the new entity to the list of Entities
 	switch (type)
 	{
-	
+	case EntityType::ITEM:
+	{
+		int newId = 0;
+		for (ListItem<Inventity*>* item = inventities.start; item != nullptr; item = item->next)
+		{
+
+			item->data->id = newId;
+			newId++;
+		}
+		if (inventities.Count() > 0)
+		{
+			highestId = inventities.end->data->id;
+		}
+		else
+		{
+			highestId = -1;
+		}
+
+		Iteminv* itemm = new Iteminv();
+		itemm->id = highestId + 1;
+		itemm->type = InventityType::ITEM;
+		itemm->icon = app->tex->Load("Assets/Textures/goldCoin.png");
+		entity = itemm;
+
+		break;
+	}
 
 	case EntityType::ESPADA:
 	{
@@ -125,10 +151,7 @@ Inventity* InventoryManager::CreateItem(EntityType type, int id, int ataque, int
 		Swordinv* sword = new Swordinv();
 		sword->id = highestId+1;
 		sword->type = InventityType::ESPADA;
-		sword->damage = ataque;
-		sword->durability = durabilidad;
-		sword->magic = magia;
-		sword->weight = peso;
+		
 		sword->icon = app->tex->Load("Assets/Textures/espmadIcon.png");
 		entity = sword;
 		break;
@@ -349,7 +372,29 @@ void InventoryManager::OnMovePointer()
 
 void InventoryManager::AddItem(Inventity* entity)
 {
-	if ( entity != nullptr) inventities.Add(entity);
+
+	bool encontrado = false;
+	if (entity != nullptr) {
+
+		if (entity->type == InventityType::ITEM) {
+			for (int i = 0; i < inventities.Count(); i++) {
+				if (inventities.At(i)->data->type == InventityType::ITEM) {
+					inventities.At(i)->data->quantity += entity->quantity;
+					encontrado = true;
+					break;
+				}
+			}
+			if(!encontrado) inventities.Add(entity);
+		
+		}
+		else {
+			inventities.Add(entity);
+		}
+
+
+		
+	
+	} 
 }
 
 bool InventoryManager::Update(float dt)
@@ -431,11 +476,11 @@ bool InventoryManager::PostUpdate()
 		for (item = inventities.start; item != NULL && ret == true; item = item->next)
 		{
 			pEntity = item->data;
-			if (pEntity->id < 5)
+			if (pEntity->id < 5) //if(inventities.cout() < 5)
 			{
 				app->render->DrawTexture(pEntity->icon, 445 + pEntity->id * 75, 300);
 			}
-			if (pEntity->id >= 5)
+			else
 			{
 				
 				app->render->DrawTexture(pEntity->icon, 445 + ((pEntity->id-5) * 75), 380);

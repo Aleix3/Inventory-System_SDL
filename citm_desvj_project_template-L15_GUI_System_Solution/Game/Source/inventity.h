@@ -94,7 +94,8 @@ public:
 	uint quantity;
 	bool active;
 	InventityType type;
-	pugi::xml_node parameters; 
+	pugi::xml_node parameters;
+	
 
 	
 };

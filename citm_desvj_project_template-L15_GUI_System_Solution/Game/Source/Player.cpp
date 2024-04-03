@@ -130,6 +130,15 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::ITEM:
 		LOG("Collision ITEM");
 		/*app->audio->PlayFx(pickCoinFxId);*/
+
+		if (physB->listener->active) {
+			app->inventoryManager->CreateItem(physB->listener->type, 0, 0, 0, 0, 0, 0);
+			physB->listener->active = false;
+			app->entityManager->DestroyEntity(physB->listener);
+			physB->body->SetActive(false);
+		}
+
+
 		break;
 	case ColliderType::ESPADA:
 		if (app->inventoryManager->IsFull() == false)

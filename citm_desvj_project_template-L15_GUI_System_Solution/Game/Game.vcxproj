@@ -130,6 +130,7 @@
     <ClInclude Include="Source\inventity.h" />
     <ClInclude Include="Source\InventoryManager.h" />
     <ClInclude Include="Source\Item.h" />
+    <ClInclude Include="Source\ItemInv.h" />
     <ClInclude Include="Source\Map.h" />
     <ClInclude Include="Source\Pathfinding.h" />
     <ClInclude Include="Source\PerfTimer.h" />

@@ -29,6 +29,10 @@ bool Item::Start() {
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);
+	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 11, bodyType::KINEMATIC);
+	pbody->id = id;
+	pbody->ctype = ColliderType::ITEM;
+	pbody->listener = this;
 
 	return true;
 }
