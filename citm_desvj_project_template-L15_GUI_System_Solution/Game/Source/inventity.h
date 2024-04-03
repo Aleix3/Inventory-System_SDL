@@ -91,8 +91,9 @@ public:
 	int id;
 	SString name;
 	SDL_Texture* icon;
-	uint quantity;
+	uint quantity = 1;
 	bool active;
+	bool stackable = false;
 	InventityType type;
 	pugi::xml_node parameters;
 	

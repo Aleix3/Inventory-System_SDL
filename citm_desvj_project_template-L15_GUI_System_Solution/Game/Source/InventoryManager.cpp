@@ -13,6 +13,7 @@
 #include "ItemInv.h"
 #include "Defs.h"
 #include "Log.h"
+#include "SString.h"
 
 InventoryManager::InventoryManager() : Module()
 {
@@ -116,7 +117,8 @@ Inventity* InventoryManager::CreateItem(EntityType type, int id, int ataque, int
 		Iteminv* itemm = new Iteminv();
 		itemm->id = highestId + 1;
 		itemm->type = InventityType::ITEM;
-		itemm->icon = app->tex->Load("Assets/Textures/goldCoin.png");
+		itemm->icon = app->tex->Load("Assets/Textures/CoinIcon.png");
+		itemm->stackable = true;
 		entity = itemm;
 
 		break;
@@ -202,7 +204,8 @@ Inventity* InventoryManager::CreateItem(EntityType type, int id, int ataque, int
 	}
 
 
-	inventities.Add(entity);
+	
+	AddItem(entity);
 
 	return entity;
 }
@@ -242,8 +245,16 @@ void InventoryManager::DestroyItem2(int entityId)
 
 			if (item->data->id == entityId) // Comprueba si el ID coincide
 			{
-				inventities.Del(item);
-				delete item->data; // Libera la memoria de la espada eliminada
+				if (item->data->stackable && item->data->quantity > 1)
+				{
+					item->data->quantity--;
+				}
+				else
+				{
+					inventities.Del(item);
+					delete item->data; // Libera la memoria de la espada eliminada
+				}
+				
 
 				break; // Termina el bucle después de eliminar la espada
 			}
@@ -384,14 +395,25 @@ void InventoryManager::AddItem(Inventity* entity)
 					break;
 				}
 			}
-			if(!encontrado) inventities.Add(entity);
+			if (!encontrado)
+			{
+				inventities.Add(entity);
+			}
 		
 		}
 		else {
 			inventities.Add(entity);
 		}
 
+		ListItem<Inventity*>* item;
 
+		int newId = 0;
+		for (item = inventities.start; item != nullptr; item = item->next)
+		{
+
+			item->data->id = newId;
+			newId++;
+		}
 		
 	
 	} 
@@ -473,10 +495,35 @@ bool InventoryManager::PostUpdate()
 
 		app->render->DrawTexture(SelectItemText, PointerPosition.x, PointerPosition.y);
 		app->render->DrawTexture(SelectedItemText, selected.x, selected.y);
-		for (item = inventities.start; item != NULL && ret == true; item = item->next)
+
+		for (item = inventities.start; item != nullptr; item = item->next)
 		{
 			pEntity = item->data;
-			if (pEntity->quantity < 1)
+
+			if((item->data->stackable))
+			{
+				std::string quantityStr = std::to_string(pEntity->quantity);
+				for (ListItem<Inventity*>* itam = inventities.start; itam != NULL && ret == true; itam = itam->next)
+				{
+
+					if (itam->data->type == InventityType::ITEM)
+					{
+						Iteminv* moneda = dynamic_cast<Iteminv*>(itam->data);
+
+							if (pEntity->quantity > 1)
+							{
+								app->render->DrawText(quantityStr.c_str(), 485 + itam->data->id * 75, 340, 20, 20);
+								
+							}
+							{
+								app->render->DrawTexture(pEntity->icon, 435 + pEntity->id * 75, 300);
+							}
+
+						
+					}
+				}
+			}
+			else
 			{
 				if (pEntity->id < 5) //if(inventities.cout() < 5)
 				{
@@ -487,14 +534,14 @@ bool InventoryManager::PostUpdate()
 
 					app->render->DrawTexture(pEntity->icon, 445 + ((pEntity->id - 5) * 75), 380);
 				}
+				if (pEntity->type == InventityType::ITEM)
+				{
+					Iteminv* pItem = dynamic_cast<Iteminv*>(pEntity);
+					pItem->original = true;
+				}
 				
 			}
-			else
-			{
-
-				app->render->DrawTexture(pEntity->icon, 445, 380);
-
-			}
+			
 			
 			
 			

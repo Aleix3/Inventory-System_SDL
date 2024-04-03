@@ -26,6 +26,7 @@ public:
 
 	bool isPicked = false;
 	PhysBody* pbody;
+	
 private:
 
 	
