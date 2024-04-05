@@ -153,7 +153,10 @@ Inventity* InventoryManager::CreateItem(EntityType type, int id, int ataque, int
 		Swordinv* sword = new Swordinv();
 		sword->id = highestId+1;
 		sword->type = InventityType::ESPADA;
-		
+		sword->damage = ataque;
+		sword->durability = durabilidad;
+		sword->magic = magia;
+		sword->weight = peso;
 		sword->icon = app->tex->Load("Assets/Textures/espmadIcon.png");
 		entity = sword;
 		break;
@@ -173,6 +176,7 @@ Inventity* InventoryManager::CreateItem(EntityType type, int id, int ataque, int
 		sword->type = InventityType::ESPADA2;
 		sword->damage = ataque;
 		sword->durability = durabilidad;
+		sword->magic = magia;
 		sword->weight = peso;
 		sword->icon = app->tex->Load("Assets/Textures/esphier.png");
 		entity = sword;
@@ -293,7 +297,7 @@ void InventoryManager::UseItemSelected(int id)
 			{
 			case InventityType::ESPADA:
 				{
-					app->scene->GetPlayer()->espadaHierro = false;
+					app->scene->GetPlayer()->espadaHierro = false; //ponemos la textura de la correspondiente
 					app->scene->GetPlayer()->espadaMadera = true;
 					app->scene->GetPlayer()->armaduraPoner = false;
 					Swordinv* espada = dynamic_cast<Swordinv*>(item->data); // Convierte a Espada si es posible
@@ -303,6 +307,7 @@ void InventoryManager::UseItemSelected(int id)
 						app->scene->GetPlayer()->ataque = espada->damage;
 						app->scene->GetPlayer()->durabilidadArma = espada->durability;
 						app->scene->GetPlayer()->magia = espada->magic;
+						int magic = espada->magic;
 						app->scene->GetPlayer()->peso = espada->weight;
 					
 					
@@ -312,7 +317,7 @@ void InventoryManager::UseItemSelected(int id)
 				}
 			case InventityType::ESPADA2:
 				{
-				app->scene->GetPlayer()->espadaHierro = true;
+				app->scene->GetPlayer()->espadaHierro = true; //ponemos la textura de la correspondiente
 				app->scene->GetPlayer()->espadaMadera = false;
 				app->scene->GetPlayer()->armaduraPoner = false;
 				Swordinv* espada = dynamic_cast<Swordinv*>(item->data); // Convierte a Espada si es posible
@@ -327,15 +332,15 @@ void InventoryManager::UseItemSelected(int id)
 				}
 			case InventityType::ARMADURA:
 			{
-				app->scene->GetPlayer()->armaduraPoner = true;
+				app->scene->GetPlayer()->armaduraPoner = true; //ponemos la textura de la correspondiente
 				app->scene->GetPlayer()->espadaMadera = false;
 				app->scene->GetPlayer()->espadaHierro = false;
-				Swordinv* espada = dynamic_cast<Swordinv*>(item->data); // Convierte a Espada si es posible
+				ArmaduraInv* armadura = dynamic_cast<ArmaduraInv*>(item->data); // Convierte a Espada si es posible
 
-				//app->scene->GetPlayer()->ataque = espada->damage;
-				//app->scene->GetPlayer()->durabilidadArma = espada->durability;
-				//app->scene->GetPlayer()->magia = espada->magic;
-				//app->scene->GetPlayer()->peso = espada->weight;
+				app->scene->GetPlayer()->defensa = armadura->defense;
+				app->scene->GetPlayer()->durabilidadArma = armadura->durability;
+				app->scene->GetPlayer()->magia = armadura->magic;
+				app->scene->GetPlayer()->peso = armadura->weight;
 
 
 				break;
@@ -500,7 +505,7 @@ bool InventoryManager::PostUpdate()
 		{
 			pEntity = item->data;
 
-			if((item->data->stackable))
+			if((pEntity->stackable))
 			{
 				std::string quantityStr = std::to_string(pEntity->quantity);
 				for (ListItem<Inventity*>* itam = inventities.start; itam != NULL && ret == true; itam = itam->next)
@@ -512,11 +517,27 @@ bool InventoryManager::PostUpdate()
 
 							if (pEntity->quantity > 1)
 							{
-								app->render->DrawText(quantityStr.c_str(), 485 + itam->data->id * 75, 340, 20, 20);
 								
+								
+								if (itam->data->id < 5)
+								{
+									app->render->DrawText(quantityStr.c_str(), 485 + itam->data->id * 75, 340, 20, 20);
+								}
+								else
+								{
+									app->render->DrawText(quantityStr.c_str(), 485 + (itam->data->id-5) * 75, 420, 20, 20);
+								}
 							}
 							{
-								app->render->DrawTexture(pEntity->icon, 435 + pEntity->id * 75, 300);
+								if (itam->data->id < 5)
+								{
+									app->render->DrawTexture(pEntity->icon, 435 + pEntity->id * 75, 300);
+								}
+								else
+								{
+									app->render->DrawTexture(pEntity->icon, 445 + ((pEntity->id - 5) * 75), 380);
+								}
+								
 							}
 
 						

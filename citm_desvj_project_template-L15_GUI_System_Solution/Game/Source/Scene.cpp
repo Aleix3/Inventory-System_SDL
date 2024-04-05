@@ -63,7 +63,7 @@ bool Scene::Awake(pugi::xml_node config)
 	int b = 200;
 	for (pugi::xml_node itemNode = config.child("armadura"); itemNode; itemNode = itemNode.next_sibling("armadura"))
 	{
-		armadura = (Armadura*)app->entityManager->CreateEntity(EntityType::ARMADURA, 100, 300, 0, 300, 50, 200);
+		armadura = (Armadura*)app->entityManager->CreateEntity(EntityType::ARMADURA, 100,0 , 300, 300, 50, 200);
 		armadura->parameters = itemNode;
 
 		armadura->id = b;

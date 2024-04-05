@@ -95,7 +95,7 @@ public:
 	bool active;
 	bool stackable = false;
 	InventityType type;
-	pugi::xml_node parameters;
+	
 	
 
 	

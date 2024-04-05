@@ -50,6 +50,7 @@ public:
 
 
 	int ataque;
+	int defensa;
 	int durabilidadArma;
 	int magia;
 	int peso;

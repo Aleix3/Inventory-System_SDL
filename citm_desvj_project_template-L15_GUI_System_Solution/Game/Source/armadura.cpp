@@ -10,8 +10,8 @@
 #include "Point.h"
 #include "Physics.h"
 
-Armadura::Armadura(EntityType type, int id, int defensa, int durabilidad, int magia, float peso)
-	: type(type), ataque(ataque), durabilidad(durabilidad), magia(magia), peso(peso), Entity(EntityType::ARMADURA)
+Armadura::Armadura(EntityType type, int id, int durabilidad, int magia, float peso, int defensa)
+	: type(type), defensa(defensa), durabilidad(durabilidad), magia(magia), peso(peso), Entity(EntityType::ARMADURA)
 {
 	name.Create("armadura");
 }
@@ -33,7 +33,7 @@ bool Armadura::Start() {
 	position.y = parameters.attribute("y").as_int();
 	texture = app->tex->Load("Assets/Textures/armadura.png");
 	
-	// L07 DONE 4: Add a physics to an item - initialize the physics body
+	// L07 DONE 4: Add a physics to an item - initialize the new physics body
 	app->tex->GetSize(texture, texW, texH);
 	pbody = app->physics->CreateCircle(position.x, position.y, 11, bodyType::STATIC);
 	pbody->id = id;

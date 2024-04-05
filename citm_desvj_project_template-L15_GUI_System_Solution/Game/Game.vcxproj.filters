@@ -1,14 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Source\armadura.cpp" />
-    <ClCompile Include="Source\EntityManager.cpp" />
-    <ClCompile Include="Source\Espada.cpp" />
     <ClCompile Include="Source\GuiControlButton.cpp" />
     <ClCompile Include="Source\GuiManager.cpp" />
     <ClCompile Include="Source\inventario.cpp" />
-    <ClCompile Include="Source\InventoryManager.cpp" />
-    <ClCompile Include="Source\Item.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\App.cpp" />
     <ClCompile Include="Source\Audio.cpp" />
@@ -20,26 +15,35 @@
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\Render.cpp" />
-    <ClCompile Include="Source\swordinv.cpp" />
     <ClCompile Include="Source\Textures.cpp" />
     <ClCompile Include="Source\Timer.cpp" />
     <ClCompile Include="Source\Window.cpp" />
     <ClCompile Include="Source\Log.cpp" />
     <ClCompile Include="Source\External\PugiXml\src\pugixml.cpp" />
+    <ClCompile Include="Source\EntityManager.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\armadura.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Espada.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Item.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\InventoryManager.cpp">
+      <Filter>InventoryEntities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\swordinv.cpp">
+      <Filter>InventoryEntities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\armadura.h" />
-    <ClInclude Include="Source\ArmaduraInv.h" />
-    <ClInclude Include="Source\Entity.h" />
-    <ClInclude Include="Source\EntityManager.h" />
-    <ClInclude Include="Source\espada.h" />
     <ClInclude Include="Source\GuiControl.h" />
     <ClInclude Include="Source\GuiControlButton.h" />
     <ClInclude Include="Source\GuiManager.h" />
     <ClInclude Include="Source\inventario.h" />
-    <ClInclude Include="Source\inventity.h" />
-    <ClInclude Include="Source\InventoryManager.h" />
-    <ClInclude Include="Source\Item.h" />
     <ClInclude Include="Source\Map.h" />
     <ClInclude Include="Source\Pathfinding.h" />
     <ClInclude Include="Source\PerfTimer.h" />
@@ -53,7 +57,6 @@
     <ClInclude Include="Source\App.h" />
     <ClInclude Include="Source\Module.h" />
     <ClInclude Include="Source\Render.h" />
-    <ClInclude Include="Source\SwordInv.h" />
     <ClInclude Include="Source\Textures.h" />
     <ClInclude Include="Source\Timer.h" />
     <ClInclude Include="Source\Window.h" />
@@ -65,6 +68,43 @@
     <ClInclude Include="Source\DynArray.h" />
     <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="Source\External\PugiXml\src\pugixml.hpp" />
-    <ClInclude Include="Source\ItemInv.h" />
+    <ClInclude Include="Source\EntityManager.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\armadura.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Entity.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\espada.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ArmaduraInv.h">
+      <Filter>InventoryEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\inventity.h">
+      <Filter>InventoryEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\InventoryManager.h">
+      <Filter>InventoryEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ItemInv.h">
+      <Filter>InventoryEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SwordInv.h">
+      <Filter>InventoryEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Item.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Entities">
+      <UniqueIdentifier>{65d9081c-2c74-4fab-9365-074c6f79db8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InventoryEntities">
+      <UniqueIdentifier>{5413b315-030b-48a8-b41c-3c32ba8b3e1a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

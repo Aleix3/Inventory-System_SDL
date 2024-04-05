@@ -10,7 +10,7 @@ struct SDL_Texture;
 class Espada : public Entity
 {
 public:
-	Espada() : Entity(EntityType::ESPADA, 0, 100, 0, 0, 0) {}
+	/*Espada() : Entity(EntityType::ESPADA, 0, 100, 0, 0, 0) {}*/
 
 	Espada(EntityType type, int id, int ataque,int durabilidad, int magia, float peso); // Constructor con parámetros
 	virtual ~Espada();
@@ -68,7 +68,7 @@ public:
 
 	bool isPicked = false;
 	EntityType type;
-	int ataque = 100;
+	int ataque;
 	int durabilidad; // Durabilidad de la espada
 	int magia;
 	float peso; // Peso de la espada

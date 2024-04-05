@@ -97,7 +97,7 @@ Entity* EntityManager::CreateEntity(EntityType type, int id, int ataque, int dur
 		entity = new Espada2(type, ataque, durabilidad, magia, peso);
 		break;
 	case EntityType::ARMADURA:
-		entity = new Armadura(type, id, defensa, durabilidad, magia, peso);
+		entity = new Armadura(type, id, durabilidad, magia, peso, defensa);
 		break;
 	default:
 		break;
@@ -128,9 +128,9 @@ void EntityManager::DestroyEntity2(int entityId)
 		{
 			if (item->data->id == entityId && entityId > 0) // Comprueba si el ID coincide
 			{
-				entities.Del(item);
-				delete item->data; // Libera la memoria de la espada eliminada
-				break; // Termina el bucle después de eliminar la espada
+				entities.Del(item); //elimina el item de la lista
+				delete item->data; // Libera la memoria del item
+				break; 
 			}
 		}
 		
@@ -150,7 +150,7 @@ Espada* EntityManager::FindEspadaById(int entityId)
 				switch (item->data->type)
 				{
 				case EntityType::ESPADA:
-					Espada* espada = dynamic_cast<Espada*>(item->data);
+					Espada* espada = dynamic_cast<Espada*>(item->data); // convertimos un item a espada
 					return espada;
 					break;
 				}

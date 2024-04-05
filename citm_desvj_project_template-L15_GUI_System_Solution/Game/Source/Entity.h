@@ -86,9 +86,9 @@ public:
 
 	int id;
 	int ataque;
-	int durabilidad; // Durabilidad de la espada
+	int durabilidad;
 	int magia;
-	float peso; // Peso de la espada
+	float peso; 
 	SString name;
 	EntityType type;
 	bool active = true;

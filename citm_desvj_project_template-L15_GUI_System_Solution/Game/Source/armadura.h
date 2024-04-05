@@ -12,7 +12,7 @@ class Armadura : public Entity
 public:
 	/*Armadura() : Entity(EntityType::ESPADA, 0, 100, 0, 0, 0) {}*/
 
-	Armadura(EntityType type, int id, int defensa,int durabilidad, int magia, float peso); // Constructor con parámetros
+	Armadura(EntityType type, int id, int durabilidad, int magia, float peso, int defensa); // Constructor con parámetros
 	virtual ~Armadura();
 
 	bool Awake();
@@ -45,7 +45,7 @@ private:
 	const char* texturePath;
 	uint texW, texH;
 
-	//L07 DONE 4: Add a physics to an item
+	//L07 DONE 4: Add a physics to the item
 	
 };
 #endif // __ITEM_H__
