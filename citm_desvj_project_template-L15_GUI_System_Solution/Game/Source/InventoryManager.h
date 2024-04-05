@@ -41,8 +41,6 @@ public:
 
 	void UseItemSelected(int id);
 
-	void RemoveItemSelected();
-
 	void OnMovePointer();
 
 	bool InventoryManager::IsFull();
@@ -62,11 +60,10 @@ public:
 	int equipedId = -1;
 	iPoint InventorySize;
 	SDL_Texture* InventoryBackground;
-	SDL_Texture* SelectItemText;
+	SDL_Texture* PointerItemText;
 	SDL_Texture* SelectedItemText;
 	SDL_Texture* EquipedItemText;
 
-	SDL_Texture* Backtexture;
 	uint texW, texH;
 	bool mostrar = false;
 	bool options = false;

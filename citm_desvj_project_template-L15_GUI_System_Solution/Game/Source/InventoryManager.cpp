@@ -48,8 +48,8 @@ bool InventoryManager::Awake(pugi::xml_node config)
 
 bool InventoryManager::Start() {
 
-	Backtexture = app->tex->Load("Assets/Textures/inventario.png");
-	SelectItemText = app->tex->Load("Assets/Textures/select.png");
+	InventoryBackground = app->tex->Load("Assets/Textures/inventario.png");
+	PointerItemText = app->tex->Load("Assets/Textures/select.png");
 	SelectedItemText = app->tex->Load("Assets/Textures/selected.png");
 	EquipedItemText = app->tex->Load("Assets/Textures/equiped.png");
 
@@ -307,7 +307,6 @@ void InventoryManager::UseItemSelected(int id)
 						app->scene->GetPlayer()->ataque = espada->damage;
 						app->scene->GetPlayer()->durabilidadArma = espada->durability;
 						app->scene->GetPlayer()->magia = espada->magic;
-						int magic = espada->magic;
 						app->scene->GetPlayer()->peso = espada->weight;
 					
 					
@@ -358,10 +357,6 @@ void InventoryManager::UseItemSelected(int id)
 		app->scene->GetPlayer()->espadaHierro = false;
 		app->scene->GetPlayer()->armaduraPoner = false;
 	}
-}
-
-void InventoryManager::RemoveItemSelected()
-{
 }
 
 void InventoryManager::OnMovePointer()
@@ -480,7 +475,7 @@ bool InventoryManager::Update(float dt)
 bool InventoryManager::PostUpdate()
 {
 	bool ret = true;
-	app->tex->GetSize(Backtexture, texW, texH);
+	app->tex->GetSize(InventoryBackground, texW, texH);
 
 	
 
@@ -491,14 +486,14 @@ bool InventoryManager::PostUpdate()
 	{
 		ListItem<Inventity*>* item;
 		Inventity* pEntity = NULL;
-		app->render->DrawTexture(Backtexture, texW / 8, texH / 8 - 200);
+		app->render->DrawTexture(InventoryBackground, texW / 8, texH / 8 - 200);
 		
 		
 		
 
 		app->render->DrawTexture(EquipedItemText, equiped.x, equiped.y);
 
-		app->render->DrawTexture(SelectItemText, PointerPosition.x, PointerPosition.y);
+		app->render->DrawTexture(PointerItemText, PointerPosition.x, PointerPosition.y);
 		app->render->DrawTexture(SelectedItemText, selected.x, selected.y);
 
 		for (item = inventities.start; item != nullptr; item = item->next)
@@ -555,11 +550,7 @@ bool InventoryManager::PostUpdate()
 
 					app->render->DrawTexture(pEntity->icon, 445 + ((pEntity->id - 5) * 75), 380);
 				}
-				if (pEntity->type == InventityType::ITEM)
-				{
-					Iteminv* pItem = dynamic_cast<Iteminv*>(pEntity);
-					pItem->original = true;
-				}
+				
 				
 			}
 			

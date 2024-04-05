@@ -30,7 +30,7 @@ public:
 
 	
 	EntityType type;
-	int ataque = 100;
+	int ataque;
 	int defensa;
 	int durabilidad; // Durabilidad de la espada
 	int magia;
